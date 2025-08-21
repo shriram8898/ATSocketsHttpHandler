@@ -293,7 +293,7 @@ namespace System.Net.Http.Functional.Tests
                 return;
             }
 
-            using (StandardSocketsHttpHandler handler = CreateSocketsHttpHandler())
+            using (ATSocketsHttpHandler handler = CreateSocketsHttpHandler())
             using (HttpClient client = new HttpClient(handler))
             {
                 handler.MaxConnectionsPerServer = 1;

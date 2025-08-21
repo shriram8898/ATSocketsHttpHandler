@@ -30,7 +30,7 @@ namespace System.Net.Http.Functional.Tests
             options.AllowedProtocols = SslProtocols.Tls;
 
             using (var server = new HttpsTestServer(options))
-            using (StandardSocketsHttpHandler handler = CreateSocketsHttpHandler())
+            using (ATSocketsHttpHandler handler = CreateSocketsHttpHandler())
             using (var client = new HttpClient(handler))
             {
                 handler.SslOptions.RemoteCertificateValidationCallback = SecurityHelper.AllowAllCertificates;

@@ -23,7 +23,7 @@ namespace System.Net.Http.Functional.Tests
         [Fact]
         public void DefaultProtocols_MatchesExpected()
         {
-            using (StandardSocketsHttpHandler handler = CreateSocketsHttpHandler())
+            using (ATSocketsHttpHandler handler = CreateSocketsHttpHandler())
             {
                 Assert.Equal(SslProtocols.None, handler.SslOptions.EnabledSslProtocols);
             }
@@ -45,7 +45,7 @@ namespace System.Net.Http.Functional.Tests
         [InlineData(SslProtocols.Tls | SslProtocols.Tls11 | SslProtocols.Tls12 | Tls13Protocol)]
         public void SetGetProtocols_Roundtrips(SslProtocols protocols)
         {
-            using (StandardSocketsHttpHandler handler = CreateSocketsHttpHandler())
+            using (ATSocketsHttpHandler handler = CreateSocketsHttpHandler())
             {
                 handler.SslOptions.EnabledSslProtocols = protocols;
                 Assert.Equal(protocols, handler.SslOptions.EnabledSslProtocols);
@@ -62,7 +62,7 @@ namespace System.Net.Http.Functional.Tests
         //        return;
         //    }
         //
-        //    using (StandardSocketsHttpHandler handler = CreateSocketsHttpHandler())
+        //    using (ATSocketsHttpHandler handler = CreateSocketsHttpHandler())
         //    using (var client = new HttpClient(handler))
         //    {
         //        handler.SslOptions.RemoteCertificateValidationCallback = SecurityHelper.AllowAllCertificates;
@@ -126,7 +126,7 @@ namespace System.Net.Http.Functional.Tests
             }
 #pragma warning restore 0618
 
-            using (StandardSocketsHttpHandler handler = CreateSocketsHttpHandler())
+            using (ATSocketsHttpHandler handler = CreateSocketsHttpHandler())
             using (var client = new HttpClient(handler))
             {
                 handler.SslOptions.RemoteCertificateValidationCallback = SecurityHelper.AllowAllCertificates;
@@ -174,7 +174,7 @@ namespace System.Net.Http.Functional.Tests
                 return;
             }
 
-            using (StandardSocketsHttpHandler handler = CreateSocketsHttpHandler())
+            using (ATSocketsHttpHandler handler = CreateSocketsHttpHandler())
             {
                 handler.SslOptions.EnabledSslProtocols = sslProtocols;
                 using (var client = new HttpClient(handler))
@@ -216,7 +216,7 @@ namespace System.Net.Http.Functional.Tests
         [MemberData(nameof(NotSupportedSSLVersionServers))]
         public async Task GetAsync_UnsupportedSSLVersion_Throws(SslProtocols sslProtocols, string url)
         {
-            using (StandardSocketsHttpHandler handler = CreateSocketsHttpHandler())
+            using (ATSocketsHttpHandler handler = CreateSocketsHttpHandler())
             using (HttpClient client = new HttpClient(handler))
             {
                 handler.SslOptions.EnabledSslProtocols = sslProtocols;
@@ -233,7 +233,7 @@ namespace System.Net.Http.Functional.Tests
                 return;
             }
 
-            using (StandardSocketsHttpHandler handler = CreateSocketsHttpHandler())
+            using (ATSocketsHttpHandler handler = CreateSocketsHttpHandler())
             using (var client = new HttpClient(handler))
             {
                 handler.SslOptions.RemoteCertificateValidationCallback = SecurityHelper.AllowAllCertificates;
@@ -266,7 +266,7 @@ namespace System.Net.Http.Functional.Tests
         {
             if (!BackendSupportsSslConfiguration)
                 return;
-            using (StandardSocketsHttpHandler handler = CreateSocketsHttpHandler())
+            using (ATSocketsHttpHandler handler = CreateSocketsHttpHandler())
             using (var client = new HttpClient(handler))
             {
                 handler.SslOptions.EnabledSslProtocols = allowedProtocol;
@@ -298,7 +298,7 @@ namespace System.Net.Http.Functional.Tests
         [Fact]
         public async Task GetAsync_DisallowTls10_AllowTls11_AllowTls12()
         {
-            using (StandardSocketsHttpHandler handler = CreateSocketsHttpHandler())
+            using (ATSocketsHttpHandler handler = CreateSocketsHttpHandler())
             using (var client = new HttpClient(handler))
             {
                 handler.SslOptions.EnabledSslProtocols = SslProtocols.Tls11 | SslProtocols.Tls12;

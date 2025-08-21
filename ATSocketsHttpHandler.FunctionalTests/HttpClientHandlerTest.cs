@@ -123,7 +123,7 @@ namespace System.Net.Http.Functional.Tests
         [Fact]
         public void Ctor_ExpectedDefaultPropertyValues_CommonPlatform()
         {
-            using (StandardSocketsHttpHandler handler = CreateSocketsHttpHandler())
+            using (ATSocketsHttpHandler handler = CreateSocketsHttpHandler())
             {
                 // Same as .NET Framework (Desktop).
                 Assert.Equal(DecompressionMethods.None, handler.AutomaticDecompression);
@@ -144,7 +144,7 @@ namespace System.Net.Http.Functional.Tests
         [Fact]
         public void Ctor_ExpectedDefaultPropertyValues_NotUapPlatform()
         {
-            using (StandardSocketsHttpHandler handler = CreateSocketsHttpHandler())
+            using (ATSocketsHttpHandler handler = CreateSocketsHttpHandler())
             {
                 // Same as .NET Framework (Desktop).
                 Assert.Equal(64, handler.MaxResponseHeadersLength);
@@ -159,7 +159,7 @@ namespace System.Net.Http.Functional.Tests
         [Fact]
         public void Credentials_SetGet_Roundtrips()
         {
-            using (StandardSocketsHttpHandler handler = CreateSocketsHttpHandler())
+            using (ATSocketsHttpHandler handler = CreateSocketsHttpHandler())
             {
                 var creds = new NetworkCredential("username", "password", "domain");
 
@@ -179,7 +179,7 @@ namespace System.Net.Http.Functional.Tests
         [InlineData(0)]
         public void MaxAutomaticRedirections_InvalidValue_Throws(int redirects)
         {
-            using (StandardSocketsHttpHandler handler = CreateSocketsHttpHandler())
+            using (ATSocketsHttpHandler handler = CreateSocketsHttpHandler())
             {
                 Assert.Throws<ArgumentOutOfRangeException>(() => handler.MaxAutomaticRedirections = redirects);
             }
@@ -191,7 +191,7 @@ namespace System.Net.Http.Functional.Tests
         [InlineData(true)]
         public async Task UseDefaultCredentials_SetToFalseAndServerNeedsAuth_StatusCodeUnauthorized(bool useProxy)
         {
-            StandardSocketsHttpHandler handler = CreateSocketsHttpHandler();
+            ATSocketsHttpHandler handler = CreateSocketsHttpHandler();
             handler.UseProxy = useProxy;
             using (var client = new HttpClient(handler))
             {
@@ -214,7 +214,7 @@ namespace System.Net.Http.Functional.Tests
                 return;
             }
 
-            StandardSocketsHttpHandler handler = CreateSocketsHttpHandler();
+            ATSocketsHttpHandler handler = CreateSocketsHttpHandler();
             using (var client = new HttpClient(handler))
             {
                 string credentialString = _credential.UserName + ":" + _credential.Password;
@@ -237,7 +237,7 @@ namespace System.Net.Http.Functional.Tests
         [Fact]
         public void Properties_Get_CountIsZero()
         {
-            using (StandardSocketsHttpHandler handler = CreateSocketsHttpHandler())
+            using (ATSocketsHttpHandler handler = CreateSocketsHttpHandler())
             {
                 IDictionary<String, object> dict = handler.Properties;
                 Assert.Same(dict, handler.Properties);
@@ -248,7 +248,7 @@ namespace System.Net.Http.Functional.Tests
         [Fact]
         public void Properties_AddItemToDictionary_ItemPresent()
         {
-            using (StandardSocketsHttpHandler handler = CreateSocketsHttpHandler())
+            using (ATSocketsHttpHandler handler = CreateSocketsHttpHandler())
             {
                 IDictionary<String, object> dict = handler.Properties;
 
@@ -419,7 +419,7 @@ namespace System.Net.Http.Functional.Tests
         [Theory, MemberData(nameof(CompressedServers))]
         public async Task GetAsync_SetAutomaticDecompression_ContentDecompressed(Uri server)
         {
-            StandardSocketsHttpHandler handler = CreateSocketsHttpHandler();
+            ATSocketsHttpHandler handler = CreateSocketsHttpHandler();
             handler.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
             using (var client = new HttpClient(handler))
             {
@@ -447,7 +447,7 @@ namespace System.Net.Http.Functional.Tests
 
             await LoopbackServer.CreateClientAndServerAsync(async proxyUri =>
             {
-                using (StandardSocketsHttpHandler handler = CreateSocketsHttpHandler())
+                using (ATSocketsHttpHandler handler = CreateSocketsHttpHandler())
                 using (var client = new HttpClient(handler))
                 {
                     handler.Proxy = new WebProxy(proxyUri);
@@ -475,7 +475,7 @@ namespace System.Net.Http.Functional.Tests
 
             await LoopbackServer.CreateClientAndServerAsync(async proxyUri =>
             {
-                using (StandardSocketsHttpHandler handler = CreateSocketsHttpHandler())
+                using (ATSocketsHttpHandler handler = CreateSocketsHttpHandler())
                 using (var client = new HttpClient(handler))
                 {
                     handler.Proxy = new WebProxy(proxyUri);
@@ -509,7 +509,7 @@ namespace System.Net.Http.Functional.Tests
 
             await LoopbackServer.CreateClientAndServerAsync(async proxyUri =>
             {
-                using (StandardSocketsHttpHandler handler = CreateSocketsHttpHandler())
+                using (ATSocketsHttpHandler handler = CreateSocketsHttpHandler())
                 using (var client = new HttpClient(handler))
                 {
                     handler.Proxy = new WebProxy(proxyUri);
@@ -536,7 +536,7 @@ namespace System.Net.Http.Functional.Tests
 
             await LoopbackServer.CreateClientAndServerAsync(async proxyUri =>
             {
-                using (StandardSocketsHttpHandler handler = CreateSocketsHttpHandler())
+                using (ATSocketsHttpHandler handler = CreateSocketsHttpHandler())
                 using (var client = new HttpClient(handler))
                 {
                     handler.Proxy = new WebProxy(proxyUri);
@@ -569,7 +569,7 @@ namespace System.Net.Http.Functional.Tests
             await LoopbackServer.CreateClientAndServerAsync(async url =>
             {
                 host = $"{url.Host}:{url.Port}";
-                using (StandardSocketsHttpHandler handler = CreateSocketsHttpHandler())
+                using (ATSocketsHttpHandler handler = CreateSocketsHttpHandler())
                 using (var client = new HttpClient(handler))
                 {
                     if (useSsl)
@@ -592,7 +592,7 @@ namespace System.Net.Http.Functional.Tests
         [Theory, MemberData(nameof(CompressedServers))]
         public async Task GetAsync_SetAutomaticDecompression_HeadersRemoved(Uri server)
         {
-            StandardSocketsHttpHandler handler = CreateSocketsHttpHandler();
+            ATSocketsHttpHandler handler = CreateSocketsHttpHandler();
             handler.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
             using (var client = new HttpClient(handler))
             using (HttpResponseMessage response = await client.GetAsync(server, HttpCompletionOption.ResponseHeadersRead))
@@ -608,7 +608,7 @@ namespace System.Net.Http.Functional.Tests
         [Fact]
         public async Task GetAsync_ServerNeedsBasicAuthAndSetDefaultCredentials_StatusCodeUnauthorized()
         {
-            StandardSocketsHttpHandler handler = CreateSocketsHttpHandler();
+            ATSocketsHttpHandler handler = CreateSocketsHttpHandler();
             handler.Credentials = CredentialCache.DefaultCredentials;
             using (var client = new HttpClient(handler))
             {
@@ -624,7 +624,7 @@ namespace System.Net.Http.Functional.Tests
         [Fact]
         public async Task GetAsync_ServerNeedsAuthAndSetCredential_StatusCodeOK()
         {
-            StandardSocketsHttpHandler handler = CreateSocketsHttpHandler();
+            ATSocketsHttpHandler handler = CreateSocketsHttpHandler();
             handler.Credentials = _credential;
             using (var client = new HttpClient(handler))
             {
@@ -658,7 +658,7 @@ namespace System.Net.Http.Functional.Tests
         {
             await LoopbackServer.CreateServerAsync(async (server, url) =>
             {
-                StandardSocketsHttpHandler handler = CreateSocketsHttpHandler();
+                ATSocketsHttpHandler handler = CreateSocketsHttpHandler();
                 handler.Credentials = new NetworkCredential("unused", "unused");
                 using (var client = new HttpClient(handler))
                 {
@@ -684,7 +684,7 @@ namespace System.Net.Http.Functional.Tests
                 return;
             }
 
-            StandardSocketsHttpHandler handler = CreateSocketsHttpHandler();
+            ATSocketsHttpHandler handler = CreateSocketsHttpHandler();
             handler.AllowAutoRedirect = false;
             using (var client = new HttpClient(handler))
             {
@@ -719,7 +719,7 @@ namespace System.Net.Http.Functional.Tests
                 return;
             }
 
-            StandardSocketsHttpHandler handler = CreateSocketsHttpHandler();
+            ATSocketsHttpHandler handler = CreateSocketsHttpHandler();
             using (var client = new HttpClient(handler))
             {
                 await LoopbackServer.CreateServerAsync(async (origServer, origUrl) =>
@@ -778,7 +778,7 @@ namespace System.Net.Http.Functional.Tests
                 return;
             }
 
-            StandardSocketsHttpHandler handler = CreateSocketsHttpHandler();
+            ATSocketsHttpHandler handler = CreateSocketsHttpHandler();
             using (var client = new HttpClient(handler))
             {
                 await LoopbackServer.CreateServerAsync(async (origServer, origUrl) =>
@@ -843,7 +843,7 @@ namespace System.Net.Http.Functional.Tests
                 return;
             }
 
-            StandardSocketsHttpHandler handler = CreateSocketsHttpHandler();
+            ATSocketsHttpHandler handler = CreateSocketsHttpHandler();
             handler.AllowAutoRedirect = true;
             using (var client = new HttpClient(handler))
             {
@@ -865,7 +865,7 @@ namespace System.Net.Http.Functional.Tests
         [Fact]
         public async Task GetAsync_AllowAutoRedirectTrue_RedirectFromHttpToHttps_StatusCodeOK()
         {
-            StandardSocketsHttpHandler handler = CreateSocketsHttpHandler();
+            ATSocketsHttpHandler handler = CreateSocketsHttpHandler();
             handler.AllowAutoRedirect = true;
             using (var client = new HttpClient(handler))
             {
@@ -887,7 +887,7 @@ namespace System.Net.Http.Functional.Tests
         [Fact]
         public async Task GetAsync_AllowAutoRedirectTrue_RedirectFromHttpsToHttp_StatusCodeRedirect()
         {
-            StandardSocketsHttpHandler handler = CreateSocketsHttpHandler();
+            ATSocketsHttpHandler handler = CreateSocketsHttpHandler();
             handler.AllowAutoRedirect = true;
             using (var client = new HttpClient(handler))
             {
@@ -915,7 +915,7 @@ namespace System.Net.Http.Functional.Tests
                 return;
             }
 
-            StandardSocketsHttpHandler handler = CreateSocketsHttpHandler();
+            ATSocketsHttpHandler handler = CreateSocketsHttpHandler();
             handler.AllowAutoRedirect = true;
             using (var client = new HttpClient(handler))
             {
@@ -937,7 +937,7 @@ namespace System.Net.Http.Functional.Tests
         [Fact]
         public async Task GetAsync_AllowAutoRedirectTrue_RedirectToUriWithParams_RequestMsgUriSet()
         {
-            StandardSocketsHttpHandler handler = CreateSocketsHttpHandler();
+            ATSocketsHttpHandler handler = CreateSocketsHttpHandler();
             handler.AllowAutoRedirect = true;
             Uri targetUri = Configuration.Http.BasicAuthUriForCreds(secure: false, userName: Username, password: Password);
             using (var client = new HttpClient(handler))
@@ -971,7 +971,7 @@ namespace System.Net.Http.Functional.Tests
                 return;
             }
 
-            StandardSocketsHttpHandler handler = CreateSocketsHttpHandler();
+            ATSocketsHttpHandler handler = CreateSocketsHttpHandler();
             handler.MaxAutomaticRedirections = maxHops;
             using (var client = new HttpClient(handler))
             {
@@ -1010,7 +1010,7 @@ namespace System.Net.Http.Functional.Tests
         [Fact]
         public async Task GetAsync_AllowAutoRedirectTrue_RedirectWithRelativeLocation()
         {
-            StandardSocketsHttpHandler handler = CreateSocketsHttpHandler();
+            ATSocketsHttpHandler handler = CreateSocketsHttpHandler();
             handler.AllowAutoRedirect = true;
             using (var client = new HttpClient(handler))
             {
@@ -1037,7 +1037,7 @@ namespace System.Net.Http.Functional.Tests
         [InlineData(400)]
         public async Task GetAsync_AllowAutoRedirectTrue_NonRedirectStatusCode_LocationHeader_NoRedirect(int statusCode)
         {
-            StandardSocketsHttpHandler handler = CreateSocketsHttpHandler();
+            ATSocketsHttpHandler handler = CreateSocketsHttpHandler();
             handler.AllowAutoRedirect = true;
             using (var client = new HttpClient(handler))
             {
@@ -1096,7 +1096,7 @@ namespace System.Net.Http.Functional.Tests
                 return;
             }
 
-            StandardSocketsHttpHandler handler = CreateSocketsHttpHandler();
+            ATSocketsHttpHandler handler = CreateSocketsHttpHandler();
             handler.AllowAutoRedirect = true;
             using (var client = new HttpClient(handler))
             {
@@ -1157,7 +1157,7 @@ namespace System.Net.Http.Functional.Tests
         [OuterLoop] // Test uses azure endpoint.
         public async Task GetAsync_CredentialIsNetworkCredentialUriRedirect_StatusCodeUnauthorized()
         {
-            StandardSocketsHttpHandler handler = CreateSocketsHttpHandler();
+            ATSocketsHttpHandler handler = CreateSocketsHttpHandler();
             handler.Credentials = _credential;
             using (var client = new HttpClient(handler))
             {
@@ -1177,7 +1177,7 @@ namespace System.Net.Http.Functional.Tests
         [OuterLoop] // Test uses azure endpoint.
         public async Task HttpClientHandler_CredentialIsNotCredentialCacheAfterRedirect_StatusCodeOK()
         {
-            StandardSocketsHttpHandler handler = CreateSocketsHttpHandler();
+            ATSocketsHttpHandler handler = CreateSocketsHttpHandler();
             handler.Credentials = _credential;
             using (var client = new HttpClient(handler))
             {
@@ -1221,7 +1221,7 @@ namespace System.Net.Http.Functional.Tests
             var credentialCache = new CredentialCache();
             credentialCache.Add(uri, "Basic", _credential);
 
-            StandardSocketsHttpHandler handler = CreateSocketsHttpHandler();
+            ATSocketsHttpHandler handler = CreateSocketsHttpHandler();
             if (PlatformDetection.IsUap)
             {
                 // UAP does not support CredentialCache for Credentials.
@@ -1617,7 +1617,7 @@ namespace System.Net.Http.Functional.Tests
 
             await LoopbackServer.CreateServerAsync(async (server, url) =>
             {
-                using (StandardSocketsHttpHandler handler = CreateSocketsHttpHandler())
+                using (ATSocketsHttpHandler handler = CreateSocketsHttpHandler())
                 using (var client = new HttpClient(handler))
                 {
                     Task<HttpResponseMessage> getResponseTask = client.GetAsync(url);
@@ -1658,7 +1658,7 @@ namespace System.Net.Http.Functional.Tests
         {
             await LoopbackServer.CreateServerAsync(async (server, url) =>
             {
-                using (StandardSocketsHttpHandler handler = CreateSocketsHttpHandler())
+                using (ATSocketsHttpHandler handler = CreateSocketsHttpHandler())
                 using (var client = new HttpClient(handler))
                 {
                     Task<HttpResponseMessage> getResponseTask = client.GetAsync(url);
@@ -3083,7 +3083,7 @@ namespace System.Net.Http.Functional.Tests
             var request = new HttpRequestMessage(HttpMethod.Get, server);
             request.Version = new Version(2, 0);
 
-            using (StandardSocketsHttpHandler handler = CreateSocketsHttpHandler())
+            using (ATSocketsHttpHandler handler = CreateSocketsHttpHandler())
             using (var client = new HttpClient(handler, false))
             {
                 // It is generally expected that the test hosts will be trusted, so we don't register a validation
@@ -3149,7 +3149,7 @@ namespace System.Net.Http.Functional.Tests
             var request = new HttpRequestMessage(HttpMethod.Get, server);
             request.Version = new Version(2, 0);
 
-            StandardSocketsHttpHandler handler = CreateSocketsHttpHandler();
+            ATSocketsHttpHandler handler = CreateSocketsHttpHandler();
             using (var client = new HttpClient(handler))
             {
                 using (HttpResponseMessage response = await client.SendAsync(request))

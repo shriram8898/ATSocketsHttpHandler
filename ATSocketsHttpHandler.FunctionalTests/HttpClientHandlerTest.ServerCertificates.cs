@@ -26,7 +26,7 @@ namespace System.Net.Http.Functional.Tests
         [SkipOnTargetFramework(TargetFrameworkMonikers.Uap)]
         public void Ctor_ExpectedDefaultValues_NotUapPlatform()
         {
-            using (StandardSocketsHttpHandler handler = CreateSocketsHttpHandler())
+            using (ATSocketsHttpHandler handler = CreateSocketsHttpHandler())
             {
                 Assert.Null(handler.SslOptions.RemoteCertificateValidationCallback);
                 Assert.Equal(X509RevocationMode.NoCheck, handler.SslOptions.CertificateRevocationCheckMode);
@@ -36,7 +36,7 @@ namespace System.Net.Http.Functional.Tests
         [Fact]
         public void ServerCertificateCustomValidationCallback_SetGet_Roundtrips()
         {
-            using (StandardSocketsHttpHandler handler = CreateSocketsHttpHandler())
+            using (ATSocketsHttpHandler handler = CreateSocketsHttpHandler())
             {
                 Assert.Null(handler.SslOptions.RemoteCertificateValidationCallback);
 
@@ -58,7 +58,7 @@ namespace System.Net.Http.Functional.Tests
         [Fact]
         public async Task NoCallback_ValidCertificate_SuccessAndExpectedPropertyBehavior()
         {
-            StandardSocketsHttpHandler handler = CreateSocketsHttpHandler();
+            ATSocketsHttpHandler handler = CreateSocketsHttpHandler();
             using (var client = new HttpClient(handler))
             {
                 using (HttpResponseMessage response = await client.GetAsync(Configuration.Http.SecureRemoteEchoServer))
@@ -95,7 +95,7 @@ namespace System.Net.Http.Functional.Tests
                 };
             using (LoopbackProxyServer proxyServer = LoopbackProxyServer.Create(options))
             {
-                StandardSocketsHttpHandler handler = CreateSocketsHttpHandler();
+                ATSocketsHttpHandler handler = CreateSocketsHttpHandler();
                 handler.SslOptions.RemoteCertificateValidationCallback = delegate { return true; };
                 handler.Proxy = new WebProxy(proxyServer.Uri)
                 {
@@ -137,7 +137,7 @@ namespace System.Net.Http.Functional.Tests
                 };
             using (LoopbackProxyServer proxyServer = LoopbackProxyServer.Create(options))
             {
-                StandardSocketsHttpHandler handler = CreateSocketsHttpHandler();
+                ATSocketsHttpHandler handler = CreateSocketsHttpHandler();
                 handler.Proxy = new WebProxy(proxyServer.Uri);
                 handler.SslOptions.RemoteCertificateValidationCallback = delegate { return true; };
                 using (var client = new HttpClient(handler))
@@ -160,7 +160,7 @@ namespace System.Net.Http.Functional.Tests
                 return;
             }
 
-            StandardSocketsHttpHandler handler = CreateSocketsHttpHandler();
+            ATSocketsHttpHandler handler = CreateSocketsHttpHandler();
             using (var client = new HttpClient(handler))
             {
                 bool callbackCalled = false;
@@ -201,7 +201,7 @@ namespace System.Net.Http.Functional.Tests
                 return;
             }
 
-            StandardSocketsHttpHandler handler = CreateSocketsHttpHandler();
+            ATSocketsHttpHandler handler = CreateSocketsHttpHandler();
             using (var client = new HttpClient(handler))
             {
                 bool callbackCalled = false;
@@ -249,7 +249,7 @@ namespace System.Net.Http.Functional.Tests
                 return;
             }
 
-            StandardSocketsHttpHandler handler = CreateSocketsHttpHandler();
+            ATSocketsHttpHandler handler = CreateSocketsHttpHandler();
             using (var client = new HttpClient(handler))
             {
                 handler.SslOptions.RemoteCertificateValidationCallback = delegate { return false; };
@@ -267,7 +267,7 @@ namespace System.Net.Http.Functional.Tests
                 return;
             }
 
-            StandardSocketsHttpHandler handler = CreateSocketsHttpHandler();
+            ATSocketsHttpHandler handler = CreateSocketsHttpHandler();
             using (var client = new HttpClient(handler))
             {
                 var e = new DivideByZeroException();
@@ -330,7 +330,7 @@ namespace System.Net.Http.Functional.Tests
                 return;
             }
 
-            StandardSocketsHttpHandler handler = CreateSocketsHttpHandler();
+            ATSocketsHttpHandler handler = CreateSocketsHttpHandler();
             handler.SslOptions.CertificateRevocationCheckMode = X509RevocationMode.Online;
             using (var client = new HttpClient(handler))
             {
@@ -353,7 +353,7 @@ namespace System.Net.Http.Functional.Tests
                 return;
             }
 
-            StandardSocketsHttpHandler handler = CreateSocketsHttpHandler();
+            ATSocketsHttpHandler handler = CreateSocketsHttpHandler();
             using (var client = new HttpClient(handler))
             {
                 bool callbackCalled = false;
@@ -411,7 +411,7 @@ namespace System.Net.Http.Functional.Tests
                 return;
             }
 
-            StandardSocketsHttpHandler handler = CreateSocketsHttpHandler();
+            ATSocketsHttpHandler handler = CreateSocketsHttpHandler();
             handler.SslOptions.RemoteCertificateValidationCallback = delegate { return true; };
             using (var client = new HttpClient(handler))
             {
@@ -430,7 +430,7 @@ namespace System.Net.Http.Functional.Tests
                 return;
             }
 
-            StandardSocketsHttpHandler handler = CreateSocketsHttpHandler();
+            ATSocketsHttpHandler handler = CreateSocketsHttpHandler();
             handler.SslOptions.CertificateRevocationCheckMode = X509RevocationMode.Online;
             using (var client = new HttpClient(handler))
             {

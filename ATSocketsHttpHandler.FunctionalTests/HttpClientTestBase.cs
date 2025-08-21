@@ -23,9 +23,9 @@ namespace System.Net.Http.Functional.Tests
 
         protected HttpClient CreateHttpClient() => new HttpClient(CreateSocketsHttpHandler());
 
-        protected static StandardSocketsHttpHandler CreateSocketsHttpHandler()
+        protected static ATSocketsHttpHandler CreateSocketsHttpHandler()
         {
-            StandardSocketsHttpHandler handler = new StandardSocketsHttpHandler();
+            ATSocketsHttpHandler handler = new ATSocketsHttpHandler();
             return handler;
         }
     }

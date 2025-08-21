@@ -11,13 +11,13 @@ using System.Threading.Tasks;
 
 namespace System.Net.Http
 {
-    public sealed class StandardSocketsHttpHandler : HttpMessageHandler
+    public sealed class ATSocketsHttpHandler : HttpMessageHandler
     {
         private readonly HttpConnectionSettings _settings = new HttpConnectionSettings();
         private StandardHttpMessageHandler _handler;
         private bool _disposed;
         
-        public StandardSocketsHttpHandler()
+        public ATSocketsHttpHandler()
         {
         }
 
@@ -25,7 +25,7 @@ namespace System.Net.Http
         {
             if (_disposed)
             {
-                throw new ObjectDisposedException(nameof(StandardSocketsHttpHandler));
+                throw new ObjectDisposedException(nameof(ATSocketsHttpHandler));
             }
         }
 

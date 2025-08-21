@@ -61,7 +61,7 @@ namespace System.Net.Http.Functional.Tests
         {
             await LoopbackServer.CreateServerAsync(async (server, url) =>
             {
-                StandardSocketsHttpHandler handler = CreateSocketsHttpHandler();
+                ATSocketsHttpHandler handler = CreateSocketsHttpHandler();
                 handler.CookieContainer = CreateSingleCookieContainer(url, cookieName, cookieValue);
                 handler.UseCookies = useCookies;
 
@@ -98,7 +98,7 @@ namespace System.Net.Http.Functional.Tests
 
             await LoopbackServer.CreateServerAsync(async (server, url) =>
             {
-                StandardSocketsHttpHandler handler = CreateSocketsHttpHandler();
+                ATSocketsHttpHandler handler = CreateSocketsHttpHandler();
 
                 var cookieContainer = new CookieContainer();
                 foreach (Cookie c in cookies)
@@ -128,7 +128,7 @@ namespace System.Net.Http.Functional.Tests
         {
             await LoopbackServer.CreateServerAsync(async (server, url) =>
             {
-                StandardSocketsHttpHandler handler = CreateSocketsHttpHandler();
+                ATSocketsHttpHandler handler = CreateSocketsHttpHandler();
                 using (HttpClient client = new HttpClient(handler))
                 {
                     HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Get, url);
@@ -150,7 +150,7 @@ namespace System.Net.Http.Functional.Tests
         {
             await LoopbackServer.CreateServerAsync(async (server, url) =>
             {
-                StandardSocketsHttpHandler handler = CreateSocketsHttpHandler();
+                ATSocketsHttpHandler handler = CreateSocketsHttpHandler();
                 using (HttpClient client = new HttpClient(handler))
                 {
                     HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Get, url);
@@ -189,7 +189,7 @@ namespace System.Net.Http.Functional.Tests
 
             await LoopbackServer.CreateServerAsync(async (server, url) =>
             {
-                StandardSocketsHttpHandler handler = CreateSocketsHttpHandler();
+                ATSocketsHttpHandler handler = CreateSocketsHttpHandler();
                 handler.CookieContainer = CreateSingleCookieContainer(url);
 
                 using (HttpClient client = new HttpClient(handler))
@@ -225,7 +225,7 @@ namespace System.Net.Http.Functional.Tests
 
             await LoopbackServer.CreateServerAsync(async (server, url) =>
             {
-                StandardSocketsHttpHandler handler = CreateSocketsHttpHandler();
+                ATSocketsHttpHandler handler = CreateSocketsHttpHandler();
                 handler.CookieContainer = CreateSingleCookieContainer(url);
 
                 using (HttpClient client = new HttpClient(handler))
@@ -284,7 +284,7 @@ namespace System.Net.Http.Functional.Tests
                 Uri url2 = new Uri(url, path2);
                 Uri unusedUrl = new Uri(url, "/unused");
 
-                StandardSocketsHttpHandler handler = CreateSocketsHttpHandler();
+                ATSocketsHttpHandler handler = CreateSocketsHttpHandler();
                 handler.CookieContainer = new CookieContainer();
                 handler.CookieContainer.Add(url1, new Cookie("cookie1", "value1"));
                 handler.CookieContainer.Add(url2, new Cookie("cookie2", "value2"));
@@ -320,7 +320,7 @@ namespace System.Net.Http.Functional.Tests
         {
             await LoopbackServer.CreateServerAsync(async (server, url) =>
             {
-                StandardSocketsHttpHandler handler = CreateSocketsHttpHandler();
+                ATSocketsHttpHandler handler = CreateSocketsHttpHandler();
                 handler.UseCookies = useCookies;
 
                 using (HttpClient client = new HttpClient(handler))
@@ -351,7 +351,7 @@ namespace System.Net.Http.Functional.Tests
         {
             await LoopbackServer.CreateServerAsync(async (server, url) =>
             {
-                StandardSocketsHttpHandler handler = CreateSocketsHttpHandler();
+                ATSocketsHttpHandler handler = CreateSocketsHttpHandler();
 
                 using (HttpClient client = new HttpClient(handler))
                 {
@@ -385,7 +385,7 @@ namespace System.Net.Http.Functional.Tests
 
             await LoopbackServer.CreateServerAsync(async (server, url) =>
             {
-                StandardSocketsHttpHandler handler = CreateSocketsHttpHandler();
+                ATSocketsHttpHandler handler = CreateSocketsHttpHandler();
                 handler.CookieContainer = CreateSingleCookieContainer(url);
 
                 using (HttpClient client = new HttpClient(handler))
@@ -408,7 +408,7 @@ namespace System.Net.Http.Functional.Tests
         {
             await LoopbackServer.CreateServerAsync(async (server, url) =>
             {
-                StandardSocketsHttpHandler handler = CreateSocketsHttpHandler();
+                ATSocketsHttpHandler handler = CreateSocketsHttpHandler();
                 handler.CookieContainer = CreateSingleCookieContainer(url);
 
                 using (HttpClient client = new HttpClient(handler))
@@ -429,7 +429,7 @@ namespace System.Net.Http.Functional.Tests
         {
             await LoopbackServer.CreateServerAsync(async (server, url) =>
             {
-                StandardSocketsHttpHandler handler = CreateSocketsHttpHandler();
+                ATSocketsHttpHandler handler = CreateSocketsHttpHandler();
 
                 using (HttpClient client = new HttpClient(handler))
                 {
@@ -465,7 +465,7 @@ namespace System.Net.Http.Functional.Tests
             {
                 Uri url1 = new Uri(url, path1);
 
-                StandardSocketsHttpHandler handler = CreateSocketsHttpHandler();
+                ATSocketsHttpHandler handler = CreateSocketsHttpHandler();
 
                 using (HttpClient client = new HttpClient(handler))
                 {
@@ -511,7 +511,7 @@ namespace System.Net.Http.Functional.Tests
 
             await LoopbackServer.CreateClientAndServerAsync(async url =>
             {
-                StandardSocketsHttpHandler handler = CreateSocketsHttpHandler();
+                ATSocketsHttpHandler handler = CreateSocketsHttpHandler();
                 handler.Credentials = new NetworkCredential("user", "pass");
 
                 using (HttpClient client = new HttpClient(handler))
