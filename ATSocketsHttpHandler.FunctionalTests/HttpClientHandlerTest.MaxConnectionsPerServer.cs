@@ -20,7 +20,7 @@ namespace System.Net.Http.Functional.Tests
         [Fact]
         public void Default_ExpectedValue()
         {
-            using (StandardSocketsHttpHandler handler = CreateSocketsHttpHandler())
+            using (ATSocketsHttpHandler handler = CreateSocketsHttpHandler())
             {
                 Assert.Equal(int.MaxValue, handler.MaxConnectionsPerServer);
             }
@@ -31,7 +31,7 @@ namespace System.Net.Http.Functional.Tests
         [InlineData(-1)]
         public void Set_InvalidValues_Throws(int invalidValue)
         {
-            using (StandardSocketsHttpHandler handler = CreateSocketsHttpHandler())
+            using (ATSocketsHttpHandler handler = CreateSocketsHttpHandler())
             {
                 Assert.Throws<ArgumentOutOfRangeException>(() => handler.MaxConnectionsPerServer = invalidValue);
             }
@@ -44,7 +44,7 @@ namespace System.Net.Http.Functional.Tests
         [InlineData(int.MaxValue - 1)]
         public void Set_ValidValues_Success(int validValue)
         {
-            using (StandardSocketsHttpHandler handler = CreateSocketsHttpHandler())
+            using (ATSocketsHttpHandler handler = CreateSocketsHttpHandler())
             {
                 try
                 {
@@ -68,7 +68,7 @@ namespace System.Net.Http.Functional.Tests
         [InlineData(3, 5, false)]
         public async Task GetAsync_MaxLimited_ConcurrentCallsStillSucceed(int maxConnections, int numRequests, bool secure)
         {
-            using (StandardSocketsHttpHandler handler = CreateSocketsHttpHandler())
+            using (ATSocketsHttpHandler handler = CreateSocketsHttpHandler())
             using (var client = new HttpClient(handler))
             {
                 handler.MaxConnectionsPerServer = maxConnections;
@@ -90,7 +90,7 @@ namespace System.Net.Http.Functional.Tests
 
             await LoopbackServer.CreateServerAsync(async (server, uri) =>
             {
-                using (StandardSocketsHttpHandler handler = CreateSocketsHttpHandler())
+                using (ATSocketsHttpHandler handler = CreateSocketsHttpHandler())
                 using (HttpClient client = new HttpClient(handler))
                 {
                     handler.MaxConnectionsPerServer = 1;

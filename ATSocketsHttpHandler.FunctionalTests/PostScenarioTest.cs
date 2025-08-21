@@ -240,7 +240,7 @@ namespace System.Net.Http.Functional.Tests
             NetworkCredential credential,
             bool preAuthenticate)
         {
-            StandardSocketsHttpHandler handler = CreateSocketsHttpHandler();
+            ATSocketsHttpHandler handler = CreateSocketsHttpHandler();
             handler.PreAuthenticate = preAuthenticate;
             handler.Credentials = credential;
             using (var client = new HttpClient(handler))

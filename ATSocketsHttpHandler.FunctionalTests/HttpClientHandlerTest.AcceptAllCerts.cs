@@ -27,7 +27,7 @@ namespace System.Net.Http.Functional.Tests
         [InlineData(SslProtocols.None, true)]
         public async Task SetDelegate_ConnectionSucceeds(SslProtocols acceptedProtocol, bool requestOnlyThisProtocol)
         {
-            using (StandardSocketsHttpHandler handler = CreateSocketsHttpHandler())
+            using (ATSocketsHttpHandler handler = CreateSocketsHttpHandler())
             using (var client = new HttpClient(handler))
             {
                 handler.SslOptions.RemoteCertificateValidationCallback = SecurityHelper.AllowAllCertificates;
@@ -63,7 +63,7 @@ namespace System.Net.Http.Functional.Tests
         [MemberData(nameof(InvalidCertificateServers))]
         public async Task InvalidCertificateServers_CertificateValidationDisabled_Succeeds(string url)
         {
-            using (StandardSocketsHttpHandler handler = CreateSocketsHttpHandler())
+            using (ATSocketsHttpHandler handler = CreateSocketsHttpHandler())
             using (var client = new HttpClient(handler))
             {
                 handler.SslOptions.RemoteCertificateValidationCallback = SecurityHelper.AllowAllCertificates;

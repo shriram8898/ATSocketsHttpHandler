@@ -88,7 +88,7 @@ namespace System.Net.Http.Functional.Tests
                 };
             using (LoopbackProxyServer proxyServer = LoopbackProxyServer.Create(options))
             {
-                using (StandardSocketsHttpHandler handler = CreateSocketsHttpHandler())
+                using (ATSocketsHttpHandler handler = CreateSocketsHttpHandler())
                 using (var client = new HttpClient(handler))
                 {
                     handler.Proxy = new WebProxy(proxyServer.Uri);
@@ -125,7 +125,7 @@ namespace System.Net.Http.Functional.Tests
                     creds = cache;
                 }
 
-                using (StandardSocketsHttpHandler handler = CreateSocketsHttpHandler())
+                using (ATSocketsHttpHandler handler = CreateSocketsHttpHandler())
                 using (var client = new HttpClient(handler))
                 {
                     handler.Proxy = new WebProxy(proxyServer.Uri) { Credentials = creds };
@@ -167,7 +167,7 @@ namespace System.Net.Http.Functional.Tests
         [MemberData(nameof(BypassedProxies))]
         public async Task Proxy_BypassTrue_GetRequestDoesntGoesThroughCustomProxy(IWebProxy proxy)
         {
-            StandardSocketsHttpHandler handler = CreateSocketsHttpHandler();
+            ATSocketsHttpHandler handler = CreateSocketsHttpHandler();
             handler.Proxy = proxy;
             using (var client = new HttpClient(handler))
             using (HttpResponseMessage response = await client.GetAsync(Configuration.Http.RemoteEchoServer))
@@ -187,7 +187,7 @@ namespace System.Net.Http.Functional.Tests
             var options = new LoopbackProxyServer.Options { AuthenticationSchemes = AuthenticationSchemes.Basic };
             using (LoopbackProxyServer proxyServer = LoopbackProxyServer.Create(options))
             {
-                StandardSocketsHttpHandler handler = CreateSocketsHttpHandler();
+                ATSocketsHttpHandler handler = CreateSocketsHttpHandler();
                 handler.Proxy = new WebProxy(proxyServer.Uri);
                 using (var client = new HttpClient(handler))
                 using (HttpResponseMessage response = await client.GetAsync(Configuration.Http.RemoteEchoServer))
@@ -200,7 +200,7 @@ namespace System.Net.Http.Functional.Tests
         [Fact]
         public async Task Proxy_SslProxyUnsupported_Throws()
         {
-            using (StandardSocketsHttpHandler handler = CreateSocketsHttpHandler())
+            using (ATSocketsHttpHandler handler = CreateSocketsHttpHandler())
             using (var client = new HttpClient(handler))
             {
                 handler.Proxy = new WebProxy("https://" + Guid.NewGuid().ToString("N"));
@@ -226,7 +226,7 @@ namespace System.Net.Http.Functional.Tests
 
             using (LoopbackProxyServer proxyServer = LoopbackProxyServer.Create())
             {
-                StandardSocketsHttpHandler handler = CreateSocketsHttpHandler();
+                ATSocketsHttpHandler handler = CreateSocketsHttpHandler();
                 handler.Proxy = new WebProxy(proxyServer.Uri);
                 using (var client = new HttpClient(handler))
                 using (HttpResponseMessage response = await client.GetAsync(Configuration.Http.SecureRemoteEchoServer))
@@ -255,7 +255,7 @@ namespace System.Net.Http.Functional.Tests
 
             await LoopbackServer.CreateServerAsync(async (proxyServer, proxyUrl) =>
             {
-                using (StandardSocketsHttpHandler handler = CreateSocketsHttpHandler())
+                using (ATSocketsHttpHandler handler = CreateSocketsHttpHandler())
                 using (var client = new HttpClient(handler))
                 {
                     handler.Proxy = new WebProxy(proxyUrl) { Credentials = proxyCreds };

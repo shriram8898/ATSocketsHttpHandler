@@ -33,7 +33,7 @@ namespace System.Net.Http.Functional.Tests
                 return;
             }
 
-            StandardSocketsHttpHandler handler = CreateSocketsHttpHandler();
+            ATSocketsHttpHandler handler = CreateSocketsHttpHandler();
             handler.SslOptions.ClientCertificates = new X509CertificateCollection();
             handler.SslOptions.ClientCertificates.Add(Configuration.Certificates.GetClientCertificate());
             handler.SslOptions.LocalCertificateSelectionCallback = (object sender, string targetHost, X509CertificateCollection localCertificates, X509Certificate remoteCertificate, string[] acceptableIssuers) => handler.SslOptions.ClientCertificates[0];
@@ -69,7 +69,7 @@ namespace System.Net.Http.Functional.Tests
 
             Func<X509Certificate2, HttpClient> createClient = (cert) =>
             {
-                StandardSocketsHttpHandler handler = CreateSocketsHttpHandler();
+                ATSocketsHttpHandler handler = CreateSocketsHttpHandler();
                 handler.SslOptions.RemoteCertificateValidationCallback = SecurityHelper.AllowAllCertificates;
                 handler.SslOptions.ClientCertificates = new X509CertificateCollection();
                 handler.SslOptions.ClientCertificates.Add(cert);
@@ -134,7 +134,7 @@ namespace System.Net.Http.Functional.Tests
                 return;
             }
 
-            using (StandardSocketsHttpHandler handler = CreateSocketsHttpHandler())
+            using (ATSocketsHttpHandler handler = CreateSocketsHttpHandler())
             using (var client = new HttpClient(handler))
             {
                 handler.SslOptions.RemoteCertificateValidationCallback = SecurityHelper.AllowAllCertificates;

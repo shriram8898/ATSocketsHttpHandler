@@ -21,7 +21,7 @@ namespace System.Net.Http.Functional.Tests
         [InlineData(-1)]
         public void InvalidValue_ThrowsException(int invalidValue)
         {
-            using (StandardSocketsHttpHandler handler = CreateSocketsHttpHandler())
+            using (ATSocketsHttpHandler handler = CreateSocketsHttpHandler())
             {
                 AssertExtensions.Throws<ArgumentOutOfRangeException>("value", () => handler.MaxResponseHeadersLength = invalidValue);
             }
@@ -34,7 +34,7 @@ namespace System.Net.Http.Functional.Tests
         [InlineData(int.MaxValue)]
         public void ValidValue_SetGet_Roundtrips(int validValue)
         {
-            using (StandardSocketsHttpHandler handler = CreateSocketsHttpHandler())
+            using (ATSocketsHttpHandler handler = CreateSocketsHttpHandler())
             {
                 handler.MaxResponseHeadersLength = validValue;
                 Assert.Equal(validValue, handler.MaxResponseHeadersLength);
@@ -44,7 +44,7 @@ namespace System.Net.Http.Functional.Tests
         [Fact]
         public async Task SetAfterUse_Throws()
         {
-            using (StandardSocketsHttpHandler handler = CreateSocketsHttpHandler())
+            using (ATSocketsHttpHandler handler = CreateSocketsHttpHandler())
             using (var client = new HttpClient(handler))
             {
                 handler.MaxResponseHeadersLength = 1;
@@ -65,7 +65,7 @@ namespace System.Net.Http.Functional.Tests
 
             await LoopbackServer.CreateServerAsync(async (server, url) =>
             {
-                using (StandardSocketsHttpHandler handler = CreateSocketsHttpHandler())
+                using (ATSocketsHttpHandler handler = CreateSocketsHttpHandler())
                 using (var client = new HttpClient(handler))
                 {
                     Task<HttpResponseMessage> getAsync = client.GetAsync(url, HttpCompletionOption.ResponseHeadersRead);
@@ -107,7 +107,7 @@ namespace System.Net.Http.Functional.Tests
 
             await LoopbackServer.CreateServerAsync(async (server, url) =>
             {
-                using (StandardSocketsHttpHandler handler = CreateSocketsHttpHandler())
+                using (ATSocketsHttpHandler handler = CreateSocketsHttpHandler())
                 using (var client = new HttpClient(handler))
                 {
                     if (maxResponseHeadersLength.HasValue)
